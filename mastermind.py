@@ -23,7 +23,13 @@ Functions
 """
 
 from argparse import ArgumentParser
+from os.path import basename
+from logging import DEBUG, Logger, basicConfig, getLogger
 from typing import Union
+
+
+logger: Logger = getLogger(basename(__file__))
+basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=DEBUG)
 
 
 SECRET_IDX: int = 0
@@ -164,7 +170,7 @@ def main() -> Union[None, tuple[int, int]]:
     try:
         args = parser.parse_args()
     except SystemExit:
-        print(
+        logger.error(
             "Please use only integers between 1 and 9 (both inclusive), as "
             "in 2,5,4,4,9,3."
         )
@@ -174,4 +180,4 @@ def main() -> Union[None, tuple[int, int]]:
 
 
 if __name__ == '__main__':
-    print(f"Result: {main()}.")
+    logger.info(f"Result: {main()}.")
